@@ -19,7 +19,7 @@ func main() {
 	Task("run").
 		Exec(runArgs...)
 	Task("watch").
-		Watch("../**/*.go").
+		Watch("../**/*.go", "../data/**/*").
 		Signaler(SigQuit).
 		Run("build").
 		Run("run")
