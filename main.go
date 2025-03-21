@@ -28,7 +28,8 @@ func main() {
 		world: NewWorld(),
 	}
 
-	g.world.AddEntity(factory.CreateEntity("Character", component.MakePosition(100, 100), component.MakeRotation(0, 0.05), component.MakeSprite("character.png")))
+	ent := g.world.AddEntity(factory.CreateEntity("Character", component.MakePosition(0, 0), component.MakeRotation(0, 0.05), component.MakeSprite("character.png")))
+	ent.Component(component.Position{}).(*component.Position).SetPosition(100, 100)
 
 	g.world.AddEntity(factory.CreateEntity("Character", component.MakePosition(100, 100), component.MakeRotation(0.5, 0.01), component.MakeSprite("character.png")))
 
