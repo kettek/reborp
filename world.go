@@ -12,6 +12,7 @@ import (
 
 type Entity interface {
 	Update() []acts.Action
+	Component(k any) any
 }
 
 type DrawableEntity interface {
@@ -51,9 +52,10 @@ func (w *World) Draw(screen *ebiten.Image) {
 	}
 }
 
-func (w *World) AddEntity(e Entity) {
+func (w *World) AddEntity(e Entity) Entity {
 	w.entities = append(w.entities, e)
 	if de, ok := e.(DrawableEntity); ok {
 		w.drawableEntities = append(w.drawableEntities, de)
 	}
+	return e
 }
