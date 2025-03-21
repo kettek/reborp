@@ -11,6 +11,7 @@ type Action = acts.Action
 // Entity is an interface that defines an entity that can be updated.
 type Entity interface {
 	Update() []Action
+	Component(k any) any
 	Components() []any
 	SetComponent(comp any)
 }

@@ -1,6 +1,8 @@
 package component
 
 import (
+	"reflect"
+
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -45,6 +47,15 @@ func (c *Chain) Draw(screen *ebiten.Image, camera *GeoMatrix) {
 func (c *Chain) Chain(last any) any {
 	c.Update()
 	return last
+}
+
+func (c *Chain) Component(k any) any {
+	for _, comp := range c.components {
+		if reflect.TypeOf(comp) == reflect.TypeOf(k) {
+			return comp
+		}
+	}
+	return nil
 }
 
 func MakeChain(components ...any) Chain {

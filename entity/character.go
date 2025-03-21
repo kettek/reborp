@@ -42,15 +42,15 @@ func (c *Character) Draw(screen *ebiten.Image, camera *component.GeoMatrix) {
 func (c *Character) Component(k any) any {
 	switch k.(type) {
 	case component.Name:
-		return c.Name
+		return &c.Name
 	case component.Position:
-		return c.Position
+		return &c.Position
 	case component.Rotation:
-		return c.Rotation
+		return &c.Rotation
 	case component.Circle:
-		return c.Circle
+		return &c.Circle
 	case component.Sprite:
-		return c.Sprite
+		return &c.Sprite
 	}
 	return nil
 }
