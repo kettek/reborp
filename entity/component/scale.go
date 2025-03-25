@@ -30,7 +30,7 @@ func (p *Scale) Y() float64 {
 	return p.y
 }
 
-func (p *Scale) Chain(last any) any {
+func (p *Scale) Chain(chain *Chain, last any) any {
 	if c, ok := last.(GeoMatrix); ok {
 		c.Scale(p.x, p.y)
 		return c

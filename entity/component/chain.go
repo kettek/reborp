@@ -7,7 +7,7 @@ import (
 )
 
 type Chainable interface {
-	Chain(component any) any
+	Chain(chain *Chain, component any) any
 }
 
 type ChainableUpdate interface {
@@ -30,8 +30,8 @@ func (c *Chain) Update() {
 		if c, ok := comp.(ChainableUpdate); ok {
 			c.Update()
 		}
-		if c, ok := comp.(Chainable); ok {
-			lastValue = c.Chain(lastValue)
+		if ch, ok := comp.(Chainable); ok {
+			lastValue = ch.Chain(c, lastValue)
 		}
 	}
 }
@@ -44,7 +44,7 @@ func (c *Chain) Draw(screen *ebiten.Image, camera *GeoMatrix) {
 	}
 }
 
-func (c *Chain) Chain(last any) any {
+func (c *Chain) Chain(chain *Chain, last any) any {
 	c.Update()
 	return last
 }

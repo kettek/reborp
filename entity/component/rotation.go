@@ -38,7 +38,7 @@ func (p *Rotation) Inc() float64 {
 	return p.inc
 }
 
-func (p *Rotation) Chain(last any) any {
+func (p *Rotation) Chain(chain *Chain, last any) any {
 	if c, ok := last.(GeoMatrix); ok {
 		c.Rotate(p.r)
 		return c

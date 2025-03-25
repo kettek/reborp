@@ -26,7 +26,7 @@ func (g *GeoMatrix) GeoM() ebiten.GeoM {
 	return g.geom
 }
 
-func (g *GeoMatrix) Chain(last any) any {
+func (g *GeoMatrix) Chain(chain *Chain, last any) any {
 	g.Reset()
 	return *g
 }

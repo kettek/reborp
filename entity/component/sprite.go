@@ -58,7 +58,7 @@ func NewSprite(str string) *Sprite {
 	return &spr
 }
 
-func (s *Sprite) Chain(last any) any {
+func (s *Sprite) Chain(chain *Chain, last any) any {
 	if comp, ok := last.(GeoMatrix); ok {
 		s.opts.GeoM.Reset()
 		s.opts.GeoM.Concat(comp.GeoM())

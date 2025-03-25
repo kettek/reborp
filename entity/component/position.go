@@ -30,7 +30,7 @@ func (p *Position) Y() int {
 	return p.y
 }
 
-func (p *Position) Chain(last any) any {
+func (p *Position) Chain(chain *Chain, last any) any {
 	if c, ok := last.(GeoMatrix); ok {
 		c.Translate(float64(p.x), float64(p.y))
 		return c
