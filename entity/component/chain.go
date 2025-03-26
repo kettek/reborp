@@ -58,6 +58,30 @@ func (c *Chain) Component(k any) any {
 	return nil
 }
 
+func (c *Chain) ComponentBefore(k any) any {
+	for i, comp := range c.components {
+		if reflect.TypeOf(comp) == reflect.TypeOf(k) {
+			if i == 0 {
+				return nil
+			}
+			return c.components[i-1]
+		}
+	}
+	return nil
+}
+
+func (c *Chain) ComponentAfter(k any) any {
+	for i, comp := range c.components {
+		if reflect.TypeOf(comp) == reflect.TypeOf(k) {
+			if i == len(c.components)-1 {
+				return nil
+			}
+			return c.components[i+1]
+		}
+	}
+	return nil
+}
+
 func MakeChain(components ...any) Chain {
 	return Chain{components}
 }
