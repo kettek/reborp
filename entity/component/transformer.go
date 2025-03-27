@@ -48,3 +48,7 @@ func NewTransformer(adjuster, adjustee any, cb func(chain *Chain, adjuster, adju
 	p := MakeTransformer(adjuster, adjustee, cb)
 	return &p
 }
+
+func init() {
+	Register("Transformer", &Transformer{})
+}

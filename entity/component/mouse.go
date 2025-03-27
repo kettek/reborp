@@ -43,3 +43,7 @@ func NewMouse() *Mouse {
 	p := MakeMouse()
 	return &p
 }
+
+func init() {
+	Register("Mouse", &Mouse{})
+}

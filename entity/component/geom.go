@@ -55,3 +55,7 @@ func NewGeoMatrix(v ...float64) *GeoMatrix {
 	g := MakeGeoMatrix(v...)
 	return &g
 }
+
+func init() {
+	Register("GeoMatrix", &GeoMatrix{})
+}

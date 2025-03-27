@@ -2,7 +2,6 @@ package component
 
 import (
 	"bytes"
-	"fmt"
 	"image"
 	_ "image/png" //
 	"os"
@@ -62,9 +61,12 @@ func (s *Sprite) Chain(chain *Chain, last any) any {
 	if comp, ok := last.(GeoMatrix); ok {
 		s.opts.GeoM.Reset()
 		s.opts.GeoM.Concat(comp.GeoM())
-		fmt.Println(s.opts.GeoM)
 		//return s
 		return last
 	}
 	return s.opts
+}
+
+func init() {
+	Register("Sprite", &Sprite{})
 }

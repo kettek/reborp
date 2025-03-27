@@ -63,4 +63,6 @@ var sheets map[string]*ebistack.Sheet
 
 func init() {
 	sheets = make(map[string]*ebistack.Sheet)
+
+	Register("SpriteStack", &SpriteStack{})
 }

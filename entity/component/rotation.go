@@ -47,3 +47,7 @@ func (p *Rotation) Chain(chain *Chain, last any) any {
 	g.Rotate(p.r)
 	return g
 }
+
+func init() {
+	Register("Rotation", &Rotation{})
+}

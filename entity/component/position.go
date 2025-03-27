@@ -37,3 +37,7 @@ func (p *Position) Chain(chain *Chain, last any) any {
 	}
 	return MakeGeoMatrix(float64(p.x), float64(p.y))
 }
+
+func init() {
+	Register("Position", &Position{})
+}

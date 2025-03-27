@@ -30,3 +30,7 @@ func NewInput(pid uint8, keymap einput.Keymap) *Input {
 	p := MakeInput(pid, keymap)
 	return &p
 }
+
+func init() {
+	Register("Input", &Input{})
+}

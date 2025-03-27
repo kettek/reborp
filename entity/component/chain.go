@@ -64,6 +64,13 @@ func (c *Chain) Component(k any) any {
 	return nil
 }
 
+func (c *Chain) ComponentFromString(k string) any {
+	if comp, ok := registry[k]; ok {
+		return c.Component(comp)
+	}
+	return nil
+}
+
 func (c *Chain) ComponentBefore(k any) any {
 	for i, comp := range c.components {
 		if reflect.TypeOf(comp) == reflect.TypeOf(k) {
@@ -101,4 +108,8 @@ func MakeChain(components ...any) Chain {
 func NewChain(components ...any) *Chain {
 	c := MakeChain(components...)
 	return &c
+}
+
+func init() {
+	Register("Chain", &Chain{})
 }

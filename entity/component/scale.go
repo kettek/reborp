@@ -37,3 +37,7 @@ func (p *Scale) Chain(chain *Chain, last any) any {
 	}
 	return MakeGeoMatrix(p.x, p.y)
 }
+
+func init() {
+	Register("Scale", &Scale{})
+}
