@@ -59,33 +59,35 @@ func main() {
 	))
 
 	g.world.AddEntity(factory.CreateEntity("Dynamic",
-		component.NewChain(
-			component.NewGeoMatrix(),
-			component.NewTransformer(
-				component.NewInput(0, einput.Keymap{ActionGrow: {einput.KeyUp}, ActionShrink: {einput.KeyDown}}),
-				component.NewScale(4, 4),
-				func(adjuster, adjustee any) {
-					inp := adjuster.(*component.Input)
-					scale := adjustee.(*component.Scale)
-					if inp.ActionIsPressed(ActionGrow) {
-						scale.SetScale(scale.X()+0.1, scale.Y()+0.1)
-					} else if inp.ActionIsPressed(ActionShrink) {
-						scale.SetScale(scale.X()-0.1, scale.Y()-0.1)
-					}
-				},
-			),
-			component.NewRotation(0.1, 0.01),
-			component.NewTransformer(
-				component.NewMouse(),
-				component.NewPosition(300, 300),
-				func(adjuster any, adjustee any) {
-					mouse := adjuster.(*component.Mouse)
-					pos := adjustee.(*component.Position)
-					pos.SetPosition(mouse.Position())
-				},
-			),
-			component.NewSpriteStack("autoCannon.png", "top", "attack"),
+		component.NewGeoMatrix(),
+		component.NewTransformer(
+			component.NewInput(0, einput.Keymap{ActionGrow: {einput.KeyUp}, ActionShrink: {einput.KeyDown}}),
+			component.NewScale(4, 4),
+			func(chain *component.Chain, adjuster, adjustee any) {
+				inp := adjuster.(*component.Input)
+				scale := adjustee.(*component.Scale)
+				if inp.ActionIsPressed(ActionGrow) {
+					scale.SetScale(scale.X()+0.1, scale.Y()+0.1)
+				} else if inp.ActionIsPressed(ActionShrink) {
+					scale.SetScale(scale.X()-0.1, scale.Y()-0.1)
+				}
+			},
 		),
+		component.NewTransformer(
+			component.NewMouse(),
+			component.NewRotation(0.0, 0.0),
+			func(chain *component.Chain, adjuster any, adjustee any) {
+				mouse := adjuster.(*component.Mouse)
+				rot := adjustee.(*component.Rotation)
+				pos := chain.Component(&component.Position{}).(*component.Position)
+				x1, y1 := pos.Position()
+				x2, y2 := mouse.Position()
+				angle := math.Atan2(float64(y2-y1), float64(x2-x1))
+				rot.SetRotation(angle - math.Pi/2)
+			},
+		),
+		component.NewPosition(300, 300),
+		component.NewSpriteStack("autoCannon.png", "top", "attack"),
 	))
 
 	ebiten.SetWindowSize(640, 480)

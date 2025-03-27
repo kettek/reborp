@@ -7,7 +7,7 @@ import (
 type Transformer struct {
 	adjuster any
 	adjustee any
-	cb       func(adjuster, adjustee any)
+	cb       func(chain *Chain, adjuster, adjustee any)
 }
 
 func (c *Transformer) Draw(screen *ebiten.Image, camera *GeoMatrix) {
@@ -26,7 +26,7 @@ func (c *Transformer) Update() {
 }
 
 func (c *Transformer) Chain(chain *Chain, last any) any {
-	c.cb(c.adjuster, c.adjustee)
+	c.cb(chain, c.adjuster, c.adjustee)
 	if c, ok := c.adjuster.(Chainable); ok {
 		c.Chain(chain, last)
 	}
@@ -36,7 +36,7 @@ func (c *Transformer) Chain(chain *Chain, last any) any {
 	return last
 }
 
-func MakeTransformer(adjuster, adjustee any, cb func(adjuster, adjustee any)) Transformer {
+func MakeTransformer(adjuster, adjustee any, cb func(chain *Chain, adjuster, adjustee any)) Transformer {
 	return Transformer{
 		adjuster: adjuster,
 		adjustee: adjustee,
@@ -44,7 +44,7 @@ func MakeTransformer(adjuster, adjustee any, cb func(adjuster, adjustee any)) Tr
 	}
 }
 
-func NewTransformer(adjuster, adjustee any, cb func(adjuster, adjustee any)) *Transformer {
+func NewTransformer(adjuster, adjustee any, cb func(chain *Chain, adjuster, adjustee any)) *Transformer {
 	p := MakeTransformer(adjuster, adjustee, cb)
 	return &p
 }
