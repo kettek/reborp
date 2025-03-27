@@ -51,6 +51,12 @@ func (c *Chain) Chain(chain *Chain, last any) any {
 
 func (c *Chain) Component(k any) any {
 	for _, comp := range c.components {
+		// Handle transformers a bit different.
+		if t, ok := comp.(*Transformer); ok {
+			if reflect.TypeOf(t.adjustee) == reflect.TypeOf(k) {
+				return t.adjustee
+			}
+		}
 		if reflect.TypeOf(comp) == reflect.TypeOf(k) {
 			return comp
 		}
@@ -72,6 +78,12 @@ func (c *Chain) ComponentBefore(k any) any {
 
 func (c *Chain) ComponentAfter(k any) any {
 	for i, comp := range c.components {
+		// Handle transformers a bit different.
+		if t, ok := comp.(*Transformer); ok {
+			if reflect.TypeOf(t.adjustee) == reflect.TypeOf(k) {
+				return t.adjustee
+			}
+		}
 		if reflect.TypeOf(comp) == reflect.TypeOf(k) {
 			if i == len(c.components)-1 {
 				return nil
