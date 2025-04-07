@@ -9,7 +9,9 @@ import (
 )
 
 type game struct {
-	world *World
+	scaleFactor float64
+	width       int
+	height      int
 }
 
 func (g *game) Update() error {
@@ -23,7 +25,13 @@ func (g *game) Draw(screen *ebiten.Image) {
 }
 
 func (g *game) Layout(outsideWidth, outsideHeight int) (int, int) {
-	return outsideWidth, outsideHeight
+	scale := ebiten.Monitor().DeviceScaleFactor()
+	if scale != g.scaleFactor {
+		g.scaleFactor = scale
+		g.width = int(float64(outsideWidth) * scale)
+		g.height = int(float64(outsideHeight) * scale)
+	}
+	return g.width, g.height
 }
 
 const (
